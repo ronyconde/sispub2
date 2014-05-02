@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html">
+	<f:view contentType="text/html"/>
+	<h:head>
+		<title>SISPUB</title>
+		<h:outputStylesheet library="css" name="grid.css"/>
+		<h:outputStylesheet library="css" name="style.css"/>
+	</h:head>
+	<h:body>
+	
+	<div id="blocoCabecalho">
+		<div class="container">
+			<h:graphicImage library="imagens" 
+				name="logo-uber.png" 
+				id="logoCompany"/>
+		</div>
+	</div>
+	
+	<div id="blocoConteudo">
+	<div class="container">
+		<h2>SISPUB</h2>
+		<h:form id="dados">
+			<fieldset>
+				<legend>DADOS DA ORGANIZAÇÃO</legend>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Id:" for="id" 
+					     rendered="#{organizacaoMB.organizacao.id != null}"/>
+					<h:inputText id="id" 
+						 value="#{organizacaoMB.organizacao.id}"
+						 rendered="#{organizacaoMB.organizacao.id != null}"
+						 readonly="true"/>
+					<h:outputLabel value="Data cadastro:" for="data" 
+					     rendered="#{organizacaoMB.organizacao.id != null}"/>
+					<h:inputText id="data" 
+						 value="#{organizacaoMB.organizacao.dataCadastro.time}"
+						 rendered="#{organizacaoMB.organizacao.id != null}"
+						 readonly="true">
+						 <f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:inputText>
+					<h:outputLabel value="Sigla:" for="sigla"/>
+					<h:inputText id="sigla" value="#{organizacaoMB.organizacao.sigla}"/>
+					<h:outputLabel value="Descrição:" for="descricao"/>
+					<h:inputText id="descricao" value="#{organizacaoMB.organizacao.descricao}"/>
+					<h:outputLabel value="Área de Atuação:" for="areaAtuacao"/>
+					<h:inputText id="areaAtuacao" value="#{organizacaoMB.organizacao.areaAtuacao}"/>
+					<h:commandButton value="Salvar" action="#{organizacaoMB.salvar}">
+						<f:ajax execute="@form" render="@form :tabela" />
+					</h:commandButton>
+				</h:panelGrid>
+			</fieldset>
+		</h:form>
+			
+		<h2>Listagem de organizações</h2>
+		<h:form id="tabela">
+			<h:dataTable value="#{organizacaoMB.listaOrganizacoes}" var="organizacao"
+				styleClass="dados" rowClasses="impar,par" >
+				<h:column>
+					<f:facet name="header"><h:outputText value="Cadastro" /></f:facet>
+					<h:outputText value="#{organizacao.dataCadastro.time}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header"><h:outputText value="Sigla" /></f:facet>
+					#{organizacao.sigla}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+					#{organizacao.descricao}
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header"><h:outputText value="Área de Atuação" /></f:facet>
+					#{organizacao.areaAtuacao}
+				</h:column>
+				
+				<h:column>
+					<h:commandButton action="#{organizacaoMB.excluir}" 
+								   value="excluir">
+						<f:ajax render="@form" />
+						<f:setPropertyActionListener 
+							target="#{organizacaoMB.organizacao}" 
+							value="#{organizacao}"/>
+					</h:commandButton>
+				</h:column>
+				
+				<h:column>
+					<h:commandButton value="alterar">
+						<f:ajax render="@form :dados" />
+						<f:setPropertyActionListener 
+							target="#{organizacaoMB.organizacao}" 
+							value="#{organizacao}"/>
+					</h:commandButton>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</div>
+	</div>
+	<div id="blocoRodape">
+	<div class="container">
+		<p>Copyright 2014. 
+		Todos os direitos reservados</p>
+	</div>
+	</div>
+	</h:body>
+</html>

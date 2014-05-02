@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html">
+	<h:head>
+		<title>SISPUB</title>
+		<h:outputStylesheet library="css" name="grid.css"/>
+		<h:outputStylesheet library="css" name="style.css"/>
+	</h:head>
+	<h:body>
+	
+	<div id="blocoCabecalho">
+		<div class="container">
+			<h:graphicImage library="imagens" 
+				name="logo-uber.png" 
+				id="logoCompany"/>
+		</div>
+	</div>
+	
+	<div id="blocoConteudo">
+	<div class="container">
+		<h2>SISPUB</h2>
+		<h:form id="dados">
+			<fieldset>
+				<legend>DADOS DO USUÁRIO</legend>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Id:" for="id" 
+					     rendered="#{usuarioMB.usuario.id != null}"/>
+					<h:inputText id="id" 
+						 value="#{usuarioMB.usuario.id}"
+						 rendered="#{usuarioMB.usuario.id != null}"
+						 readonly="true"/>
+					<h:outputLabel value="Data cadastro:" for="data" 
+					     rendered="#{usuarioMB.usuario.id != null}"/>
+					<h:inputText id="data" 
+						 value="#{usuarioMB.usuario.dataCadastro.time}"
+						 rendered="#{usuarioMB.usuario.id != null}"
+						 readonly="true">
+						 <f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:inputText>
+					<h:outputLabel value="Login:" for="login"/>
+					<h:inputText id="login" value="#{usuarioMB.usuario.login}"/>
+					<h:outputLabel value="Nome:" for="nome"/>
+					<h:inputText id="Nome" value="#{usuarioMB.usuario.nome}"/>
+					<h:outputLabel value="Senha:" for="senha"/>
+					<h:inputText id="senha" value="#{usuarioMB.usuario.senha}"/>
+					<h:commandButton value="Salvar" action="#{usuarioMB.salvar}">
+						<f:ajax execute="@form" render="@form :tabela" />
+					</h:commandButton>
+					</h:panelGrid>
+			</fieldset>
+		</h:form>
+			
+		<h2>Listagem de Usuários</h2>
+		<h:form id="tabela">
+			<h:dataTable value="#{usuarioMB.listaUsuarios}" var="usuario"
+				styleClass="dados" rowClasses="impar,par" >
+				<h:column>
+					<f:facet name="header"><h:outputText value="Cadastro" /></f:facet>
+					<h:outputText value="#{usuario.dataCadastro.time}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header"><h:outputText value="Login" /></f:facet>
+					#{usuario.login}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header"><h:outputText value="Nome" /></f:facet>
+					#{usuario.nome}
+				</h:column>
+				
+				<h:column>
+					<h:commandButton action="#{usuarioMB.excluir}" 
+								   value="excluir">
+						<f:ajax render="@form" />
+						<f:setPropertyActionListener 
+							target="#{usuarioMB.usuario}" 
+							value="#{usuario}"/>
+					</h:commandButton>
+				</h:column>
+				
+				<h:column>
+					<h:commandButton value="alterar">
+						<f:ajax render="@form :dados" />
+						<f:setPropertyActionListener 
+							target="#{usuarioMB.usuario}" 
+							value="#{usuario}"/>
+					</h:commandButton>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</div>
+	</div>
+	<div id="blocoRodape">
+	<div class="container">
+		<p>Copyright 2014. 
+		Todos os direitos reservados</p>
+	</div>
+	</div>
+	</h:body>
+</html>
