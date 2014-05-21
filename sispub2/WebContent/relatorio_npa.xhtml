@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html">
+	<f:view contentType="text/html"/>
+	<h:head>
+		<title>SISPUB</title>
+		<h:outputStylesheet library="css" name="grid.css"/>
+		<h:outputStylesheet library="css" name="style.css"/>
+	</h:head>
+	<h:body>
+	
+	<div id="blocoCabecalho">
+		<div class="container">
+			<h:graphicImage library="imagens" 
+				name="logo-uber.png" 
+				id="logoCompany"/>
+		</div>
+	</div>
+	
+	<div id="blocoConteudo">
+	<div class="container">
+		<h2>SISPUB</h2>
+		<h:form id="dados_pend">
+			<fieldset>
+				<legend>Relatório de NPA</legend>
+				<h:panelGrid columns="2">
+					<h:commandButton action="#{relatorioMB.geraRelatorio()}" value="Gerar Relatório de NPA"/>
+				</h:panelGrid>
+			</fieldset>
+		</h:form>
+		</div>
+	</div>
+	<div id="blocoRodape">
+	<div class="container">
+		<p>Copyright 2014. 
+		Todos os direitos reservados</p>
+	</div>
+	</div>
+	</h:body>
+</html>

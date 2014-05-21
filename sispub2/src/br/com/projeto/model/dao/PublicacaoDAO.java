@@ -28,7 +28,19 @@ public class PublicacaoDAO {
 	}
 	
 	public List<Publicacao> listar(){
-		String jpql = "Select p from Publicacao p order by assunto";
+		String jpql = "Select p from Publicacao p order by numero";
+		Query query = entityManager.createQuery(jpql);
+		return query.getResultList();
+	}
+	
+	public List<Publicacao> listarNpa(){
+		String jpql = "Select p from Publicacao p where categoria_id = 1 order by numero";
+		Query query = entityManager.createQuery(jpql);
+		return query.getResultList();
+	}
+	
+	public List<Publicacao> listarPendencia(){
+		String jpql = "Select p from Publicacao p where pendencia != null and pendencia != ''";
 		Query query = entityManager.createQuery(jpql);
 		return query.getResultList();
 	}

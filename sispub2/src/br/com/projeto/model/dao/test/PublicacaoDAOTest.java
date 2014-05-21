@@ -32,9 +32,9 @@ public class PublicacaoDAOTest {
 		// Criacao de um novo produto
 		
 		Publicacao publicacao = new Publicacao();
-		publicacao.setNumero(100);
-		publicacao.setAssunto("teste");
-		publicacao.setPendencia("teste");
+		publicacao.setNumero(25);
+		publicacao.setAssunto("Legislações");
+		publicacao.setPendencia("aguardando ato de aprovação");
 		publicacao.setDataCadastro(Calendar.getInstance());
 		
 		Categoria categoria = new Categoria();

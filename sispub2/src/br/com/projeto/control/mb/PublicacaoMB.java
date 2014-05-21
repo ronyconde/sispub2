@@ -33,18 +33,32 @@ public class PublicacaoMB {
 	}
 	
 	//Atributo que guarda a colecao produtos armazenados em BD
-	private int categoriaSelecionada;
-	private int organizacaoSelecionada;
+	private Categoria categoria;
+	private Long categoriaSelecionada;
+	private Long organizacaoSelecionada;
 		
 	public List<SelectItem> categoriaSelect;
 	public List<SelectItem> organizacaoSelect;
 	
 	public List<Publicacao> listaPublicacoes = new ArrayList<Publicacao>();
 	
+	public List<Publicacao> listaNpa = new ArrayList<Publicacao>();
+	
+	public List<Publicacao> listaPendencias = new ArrayList<Publicacao>();
+	
 	public List<Publicacao> getListaPublicacoes() {
 		return listaPublicacoes;
-	}	
-
+	}
+	
+	public List<Publicacao> getListaNpa() {
+		return listaNpa;
+	}
+	
+	public List<Publicacao> getListaPendencias() {
+		return listaPendencias;
+	}
+		
+	
 	//Metodo invocado apos a classe ser carregada pelo servidor
 	@PostConstruct
 	public List<SelectItem> getCategoriaSelect() {
@@ -83,7 +97,7 @@ public List<SelectItem> getOrganizacaoSelect() {
 			if(listaOrganizacoes != null && !listaOrganizacoes.isEmpty()){
 				SelectItem item;
 				for ( Organizacao org : listaOrganizacoes){
-					item = new SelectItem(org, org.getDescricao());
+					item = new SelectItem(org, org.getSigla());
 					this.organizacaoSelect.add(item);
 				}
 			}
@@ -95,9 +109,13 @@ public List<SelectItem> getOrganizacaoSelect() {
 		EntityManager em = JPAUtil.getEntityManager();
 		PublicacaoDAO dao = new PublicacaoDAO(em);
 		listaPublicacoes = dao.listar();
+		listaNpa = dao.listarNpa();
+		listaPendencias = dao.listarPendencia();
+		
 		em.close();
 	}
 	
+		
 	public void excluir(){
 		EntityManager em = JPAUtil.getEntityManager();
 		PublicacaoDAO dao = new PublicacaoDAO(em);
@@ -112,13 +130,15 @@ public List<SelectItem> getOrganizacaoSelect() {
 		EntityManager em = JPAUtil.getEntityManager();
 		PublicacaoDAO dao = new PublicacaoDAO(em);
 		em.getTransaction().begin();
+		
 		publicacao.setDataCadastro(Calendar.getInstance());
 				
 		Categoria categoria = new Categoria();
-		categoria.setId((long) categoriaSelecionada);
-		//publicacao.setCategoria(categoriaSelecionada);
+		
+		categoria.setId(categoriaSelecionada);
+		
 		Organizacao organizacao = new Organizacao();
-		organizacao.setId((long) organizacaoSelecionada);
+		organizacao.setId(organizacaoSelecionada);
 		//publicacao.setOrganizacao(organizacaoSelecionada);
 		
 		if(publicacao.getId()!=null){
@@ -132,22 +152,29 @@ public List<SelectItem> getOrganizacaoSelect() {
 		carregarPublicacoes();
 	}
 
-	public int getCategoriaSelecionada() {
+	public Long getCategoriaSelecionada() {
 		return categoriaSelecionada;
 	}
 
-	public void setCategoriaSelecionada(int categoriaSelecionada) {
+	public void setCategoriaSelecionada(Long categoriaSelecionada) {
 		this.categoriaSelecionada = categoriaSelecionada;
 	}
 
-	public int getOrganizacaoSelecionada() {
+	public Long getOrganizacaoSelecionada() {
 		return organizacaoSelecionada;
 	}
 
-	public void setOrganizacaoSelecionada(int organizacaoSelecionada) {
+	public void setOrganizacaoSelecionada(Long organizacaoSelecionada) {
 		this.organizacaoSelecionada = organizacaoSelecionada;
 	}
-	
 
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
 
 }

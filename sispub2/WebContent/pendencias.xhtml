@@ -22,9 +22,9 @@
 	<div id="blocoConteudo">
 	<div class="container">
 		<h2>SISPUB</h2>
-		<h:form id="dados">
+		<h:form id="dados_pend">
 			<fieldset>
-				<legend>DADOS DA PUBLICACAÇÃO</legend>
+				<legend>CONTROLE DE PENDÊNCIAS</legend>
 				<h:panelGrid columns="2">
 					<h:outputLabel value="Id:" for="id" 
 					     rendered="#{publicacaoMB.publicacao.id != null}"/>
@@ -43,42 +43,24 @@
 					</h:inputText>
 					
 					<h:outputLabel value="Numero:" for="numero"/>
-					<h:inputText id="numero" value="#{publicacaoMB.publicacao.numero}"/>
+					<h:inputText id="numero" value="#{publicacaoMB.publicacao.numero}" 
+						 readonly="true"/>
 					<h:outputLabel value="Assunto" for="assunto"/>
-					<h:inputText id="assunto" value="#{publicacaoMB.publicacao.assunto}"/>
-					<h:outputLabel value="Pendencia" for="pendencia"/>
+					<h:inputText id="assunto" value="#{publicacaoMB.publicacao.assunto}"
+					     readonly="true"/>
+					<h:outputLabel value="Pendência" for="pendencia"/>
 					<h:inputText id="pendencia" value="#{publicacaoMB.publicacao.pendencia}"/>
-										
-					<h:outputLabel value="Categoria" for="categoria"/>
-					<h:selectOneMenu value="#{publicacaoMB.publicacao.categoria.id}">
-						<f:selectItem itemLabel="Selecione a Categoria" itemValue=""/>
-						<f:selectItems value="#{publicacaoMB.categoriaSelect}" 
-						itemLabel="#{publicacaoMB.publicacao.categoria.descricao}" itemValue="#{publicacaoMB.publicacao.categoria.id}"/>
-						<f:ajax event="change" render="idcategoriaSelecionada"/>
-					</h:selectOneMenu>
 					
-					
-						
-					<h:outputLabel value="Organizacao" for="organizacao"/>
-					<h:selectOneMenu value="#{publicacaoMB.organizacaoSelecionada}">
-						<f:selectItem itemLabel="Selecione a Organização" itemValue=""/>
-						<f:selectItems value="#{publicacaoMB.organizacaoSelect}"
-						itemLabel="#{organizacao.organizacao.sigla}" itemValue="#{organizacao.organizacao.id}"/>
-						</h:selectOneMenu>
-					<h:outputLabel value="Id da Categoria"/>
-					<h:outputText id="idcategoriaSelecionada" value="#{publicacaoMB.publicacao.categoria.id}"/>
-					
-					
-					<h:commandButton value="Salvar" action="#{publicacaoMB.salvar}">
+					<h:commandButton value="Atualizar" action="#{publicacaoMB.salvar}">
 						<f:ajax execute="@form" render="@form :tabela" />
 					</h:commandButton>
 				</h:panelGrid>
 			</fieldset>
 		</h:form>
 			
-		<h2>Listagem de publicacoes</h2>
+		<h2>Listagem de publicações com pendências</h2>
 		<h:form id="tabela">
-			<h:dataTable value="#{publicacaoMB.listaPublicacoes}" var="publicacao"
+			<h:dataTable value="#{publicacaoMB.listaPendencias}" var="publicacao"
 				styleClass="dados" rowClasses="impar,par" >
 				<h:column>
 					<f:facet name="header"><h:outputText value="Cadastro" /></f:facet>
@@ -113,18 +95,8 @@
 				</h:column>
 				
 				<h:column>
-					<h:commandButton action="#{publicacaoMB.excluir}" 
-								   value="excluir">
-						<f:ajax render="@form" />
-						<f:setPropertyActionListener 
-							target="#{publicacaoMB.publicacao}" 
-							value="#{publicacao}"/>
-					</h:commandButton>
-				</h:column>
-				
-				<h:column>
-					<h:commandButton value="alterar">
-						<f:ajax render="@form :dados" />
+					<h:commandButton value="atualizar pendência">
+						<f:ajax render="@form :dados_pend" />
 						<f:setPropertyActionListener 
 							target="#{publicacaoMB.publicacao}" 
 							value="#{publicacao}"/>
