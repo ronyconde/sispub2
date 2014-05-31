@@ -25,8 +25,8 @@ public class CategoriaDAOTest {
 		entityManager.getTransaction().begin();
 		// Criacao de um novo produto
 		Categoria categoria = new Categoria();
-		categoria.setSigla("IC");
-		categoria.setDescricao("Instrução de Comando");
+		categoria.setSigla("TEST");
+		categoria.setDescricao("TEST");
 		categoria.setDataCadastro(Calendar.getInstance());
 		
 		//Execucao do cadastro
