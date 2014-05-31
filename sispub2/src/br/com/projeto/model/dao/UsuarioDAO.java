@@ -32,4 +32,15 @@ public class UsuarioDAO {
 		Query query = entityManager.createQuery(jpql);
 		return query.getResultList();
 	}
+	
+	public Usuario efetuarLogin(String login, String senha) {
+		String jpql = "from Usuario u where u.login=:pLogin and u.senha=:pSenha";
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("pLogin", login);
+		query.setParameter("pSenha", senha);
+		if (!query.getResultList().isEmpty()) {
+			return (Usuario) query.getResultList().get(0);
+		}
+		return null;
+	}
 }
